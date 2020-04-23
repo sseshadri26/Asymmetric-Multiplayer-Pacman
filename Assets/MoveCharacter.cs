@@ -91,5 +91,6 @@ public class MoveCharacter : MonoBehaviour
         targetRotation *= Quaternion.AngleAxis(rotateVel * turnInput * Time.deltaTime, Vector3.up);
         transform.rotation = targetRotation;
 
+
     }
 }
