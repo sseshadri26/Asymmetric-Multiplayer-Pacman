@@ -5,20 +5,19 @@ using UnityEngine;
 public class CameraFollowPlayer : MonoBehaviour
 {
     GameObject player;
-    public float xOff;
-    public float yOff;
-    public float zOff;
 
     [Range(0.01f, 1f)]
     public float lag;
 
-    Vector3 camOffset;
+    public Vector3 camOffset;
 
     Vector3 destination = Vector3.zero;
-    float rotateVel;
+
+    [Range(5f, 30f)]
+    public float rotateVel = 10;
     Camera mycam;
 
-    bool topDown = false;
+    public bool topDown = false;
 
 
 
@@ -27,9 +26,9 @@ public class CameraFollowPlayer : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        camOffset = new Vector3(xOff, yOff, zOff);
         player = GameObject.Find("player");
         mycam = GetComponent<Camera>();
+        Cursor.visible = false;
         
     }
 
@@ -39,6 +38,8 @@ public class CameraFollowPlayer : MonoBehaviour
         {
             topDown = !topDown;
         }
+
+        //Debug.Log(Input.GetAxis("Mouse X"));
     }
 
 
@@ -57,13 +58,13 @@ public class CameraFollowPlayer : MonoBehaviour
         }
         else
         {
-            newPos = player.transform.position + camOffset;
-            transform.LookAt(mycam.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, mycam.nearClipPlane)), Vector3.up);
+            //transform.LookAt(mycam.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, mycam.nearClipPlane)), Vector3.up);
 
             Quaternion turnAngle = Quaternion.AngleAxis(Input.GetAxis("Mouse X") * rotateVel, Vector3.up);
             camOffset = turnAngle * camOffset;
             transform.LookAt(player.transform);
-            
+            newPos = player.transform.position + camOffset;
+
         }
 
         transform.position = Vector3.Slerp(transform.position, newPos, lag);

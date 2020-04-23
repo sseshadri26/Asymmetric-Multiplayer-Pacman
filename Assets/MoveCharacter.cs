@@ -7,9 +7,14 @@ public class MoveCharacter : MonoBehaviour
     public float forwardVel;
     public float rotateVel;
 
+    public float acceleration;
+
+    public Camera cam;
+    CameraFollowPlayer camScript;
+
     Quaternion targetRotation;
     Rigidbody rb;
-    float forwardInput, turnInput;
+    float forwardInput, sideInput;
 
     public Quaternion TargetRotation
     {
@@ -25,17 +30,23 @@ public class MoveCharacter : MonoBehaviour
         rb = GetComponent<Rigidbody>();
 
         forwardInput = 0;
-        turnInput = 0;
+        sideInput = 0;
+        camScript = cam.GetComponent<CameraFollowPlayer>();
     }
 
     // Update is called once per frame
     void Update()
     {
         GetInput();
-        Turn();
+
+        
         Run();
+
+        
+        Turn();
         
         
+
     }
 
     private void FixedUpdate()
@@ -62,24 +73,23 @@ public class MoveCharacter : MonoBehaviour
 
         if (Input.GetKey(KeyCode.A))
         {
-            turnInput = -1;
+            sideInput = -1;
         }
         else if (Input.GetKey(KeyCode.D))
         {
-            turnInput = 1;
+            sideInput = 1;
         }
         else
         {
-            turnInput = 0;
+            sideInput = 0;
         }
     }
 
     void Run()
     {
-        rb.velocity = transform.forward * forwardInput * forwardVel;
-        Debug.Log(transform.forward );
-        Debug.Log("fi" + forwardInput);
-        Debug.Log("fv" + forwardVel);
+        Vector3 desiredVel = transform.forward * forwardInput * forwardVel + transform.right * sideInput * forwardVel;
+        rb.velocity = Vector3.Slerp(rb.velocity, desiredVel, acceleration);
+
 
 
     }
@@ -87,10 +97,20 @@ public class MoveCharacter : MonoBehaviour
     void Turn()
     {
 
+        //Quaternion turnAngle = Quaternion.AngleAxis(Input.GetAxis("Mouse X") * rotateVel, Vector3.up);
+        //transform.rotation = targetRotation;
+        ////targetRotation *= Quaternion.AngleAxis(rotateVel * turnInput * Time.deltaTime, Vector3.up);
+        ////transform.rotation = targetRotation;
+        if (!camScript.topDown)
+        {
+            Vector3 cameraAtPlayerLevelPos = new Vector3(cam.transform.position.x, transform.position.y, cam.transform.position.z);
 
-        targetRotation *= Quaternion.AngleAxis(rotateVel * turnInput * Time.deltaTime, Vector3.up);
-        transform.rotation = targetRotation;
-
+            transform.LookAt(2 * transform.position - cameraAtPlayerLevelPos);
+        }
+        else
+        {
+            transform.rotation = Quaternion.Euler(0, 0, 0);
+        }
 
     }
 }
