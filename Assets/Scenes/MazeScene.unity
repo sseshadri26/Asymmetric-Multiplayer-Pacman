@@ -251,6 +251,7 @@ MonoBehaviour:
   player: {fileID: 0}
   sightDistance: 1
   frontSightDistance: 0.5
+  playerSpotDistance: 1.8
   acceleration: 0.15
   forwardVel: 2
   playerControl: 0
@@ -709,6 +710,7 @@ MonoBehaviour:
   player: {fileID: 0}
   sightDistance: 1
   frontSightDistance: 0.5
+  playerSpotDistance: 1.8
   acceleration: 0.15
   forwardVel: 2
   playerControl: 0
@@ -824,7 +826,7 @@ PrefabInstance:
     - target: {fileID: 3900017030925232343, guid: c29f2e2ec2ceb42b8ad93e37b113e48a,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -4.39
+      value: 0.2
       objectReference: {fileID: 0}
     - target: {fileID: 3900017030925232343, guid: c29f2e2ec2ceb42b8ad93e37b113e48a,
         type: 3}
@@ -834,7 +836,7 @@ PrefabInstance:
     - target: {fileID: 3900017030925232343, guid: c29f2e2ec2ceb42b8ad93e37b113e48a,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -2.3
+      value: 0.95
       objectReference: {fileID: 0}
     - target: {fileID: 3900017030925232343, guid: c29f2e2ec2ceb42b8ad93e37b113e48a,
         type: 3}
@@ -1281,6 +1283,7 @@ MonoBehaviour:
   player: {fileID: 0}
   sightDistance: 1
   frontSightDistance: 0.5
+  playerSpotDistance: 1.8
   acceleration: 0.15
   forwardVel: 2
   playerControl: 0
@@ -1675,6 +1678,7 @@ MonoBehaviour:
   player: {fileID: 0}
   sightDistance: 1
   frontSightDistance: 0.5
+  playerSpotDistance: 1.8
   acceleration: 0.15
   forwardVel: 2
   playerControl: 0
@@ -2793,6 +2797,7 @@ MonoBehaviour:
   player: {fileID: 0}
   sightDistance: 1
   frontSightDistance: 0.5
+  playerSpotDistance: 1.8
   acceleration: 0.15
   forwardVel: 2
   playerControl: 0
