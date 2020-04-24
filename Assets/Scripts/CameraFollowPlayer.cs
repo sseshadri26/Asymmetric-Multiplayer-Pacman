@@ -64,7 +64,7 @@ public class CameraFollowPlayer : MonoBehaviour
 
 
 
-            Quaternion turnAngleHorizontal = Quaternion.AngleAxis(Input.GetAxis("Mouse X") * rotateVel, Vector3.up);
+            Quaternion turnAngleHorizontal = Quaternion.AngleAxis(Input.GetAxis("Mouse X") * rotateVel *Time.deltaTime*60, Vector3.up);
             camOffset = turnAngleHorizontal * camOffset;
 
             transform.LookAt(player.transform.position + Vector3.up * tiltUp);
