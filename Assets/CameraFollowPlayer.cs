@@ -52,22 +52,33 @@ public class CameraFollowPlayer : MonoBehaviour
         {
             
             newPos = new Vector3(0, 21, 0);
-            transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.Euler(90, 0, 0), lag);
+            transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.Euler(90, 0, 0), lag/2);
+            transform.position = Vector3.Slerp(transform.position, newPos, lag/3);
 
-            
+
         }
         else
         {
             //transform.LookAt(mycam.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, mycam.nearClipPlane)), Vector3.up);
 
-            Quaternion turnAngle = Quaternion.AngleAxis(Input.GetAxis("Mouse X") * rotateVel, Vector3.up);
-            camOffset = turnAngle * camOffset;
+
+
+
+            Quaternion turnAngleHorizontal = Quaternion.AngleAxis(Input.GetAxis("Mouse X") * rotateVel, Vector3.up);
+            camOffset = turnAngleHorizontal * camOffset;
+
             transform.LookAt(player.transform);
+
             newPos = player.transform.position + camOffset;
+
+
+            transform.position = Vector3.Slerp(transform.position, newPos, lag);
+
+
 
         }
 
-        transform.position = Vector3.Slerp(transform.position, newPos, lag);
+        
 
 
 
