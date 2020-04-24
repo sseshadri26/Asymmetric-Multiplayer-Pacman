@@ -18,7 +18,7 @@ public class CameraFollowPlayer : MonoBehaviour
     Camera mycam;
 
     public bool topDown = false;
-
+    public float tiltUp;
 
 
 
@@ -28,7 +28,7 @@ public class CameraFollowPlayer : MonoBehaviour
     {
         player = GameObject.Find("player");
         mycam = GetComponent<Camera>();
-        Cursor.visible = false;
+        //Cursor.visible = false;
         
     }
 
@@ -67,7 +67,7 @@ public class CameraFollowPlayer : MonoBehaviour
             Quaternion turnAngleHorizontal = Quaternion.AngleAxis(Input.GetAxis("Mouse X") * rotateVel, Vector3.up);
             camOffset = turnAngleHorizontal * camOffset;
 
-            transform.LookAt(player.transform);
+            transform.LookAt(player.transform.position + Vector3.up*tiltUp);
 
             newPos = player.transform.position + camOffset;
 

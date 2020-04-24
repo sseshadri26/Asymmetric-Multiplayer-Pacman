@@ -14,6 +14,8 @@ public class MoveCharacter : MonoBehaviour
 
     Quaternion targetRotation;
     Rigidbody rb;
+
+
     float forwardInput, sideInput;
 
     public Quaternion TargetRotation
@@ -87,8 +89,26 @@ public class MoveCharacter : MonoBehaviour
 
     void Run()
     {
-        Vector3 desiredVel = transform.forward * forwardInput * forwardVel + transform.right * sideInput * forwardVel;
-        rb.velocity = Vector3.Slerp(rb.velocity, desiredVel, acceleration);
+        if (camScript.topDown)
+        {
+            Vector3 desiredVel = Vector3.forward * forwardInput * forwardVel + Vector3.right * sideInput * forwardVel;
+            //implement acceleration later
+            //rb.velocity = Vector3.Slerp(rb.velocity, desiredVel, acceleration);
+            rb.velocity = desiredVel;
+
+
+
+            
+
+
+
+        }
+        else
+        {
+            Vector3 desiredVel = transform.forward * forwardInput * forwardVel + transform.right * sideInput * forwardVel;
+            rb.velocity = Vector3.Slerp(rb.velocity, desiredVel, acceleration);
+        }
+        
 
 
 
@@ -109,7 +129,11 @@ public class MoveCharacter : MonoBehaviour
         }
         else
         {
-            transform.rotation = Quaternion.Euler(0, 0, 0);
+            Vector3 turnDir = new Vector3(sideInput, 0f, forwardInput);
+            if (turnDir != Vector3.zero)
+            {
+                transform.rotation = Quaternion.LookRotation(turnDir);
+            }
         }
 
     }
