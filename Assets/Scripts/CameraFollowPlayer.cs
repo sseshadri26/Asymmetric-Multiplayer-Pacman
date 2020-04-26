@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class CameraFollowPlayer : MonoBehaviour
 {
-    GameObject player;
+    public GameObject player;
 
     [Range(0.01f, 1f)]
     public float lag;
@@ -19,14 +19,15 @@ public class CameraFollowPlayer : MonoBehaviour
 
     public bool topDown = false;
     public float tiltUp;
-
+    Rigidbody playerRb;
 
 
 
     // Start is called before the first frame update
     void Start()
     {
-        player = GameObject.Find("player");
+
+        playerRb = player.GetComponent<Rigidbody>();
         mycam = GetComponent<Camera>();
         //Cursor.visible = false;
 
@@ -64,15 +65,15 @@ public class CameraFollowPlayer : MonoBehaviour
 
 
 
-            Quaternion turnAngleHorizontal = Quaternion.AngleAxis(Input.GetAxis("Mouse X") * rotateVel *Time.deltaTime*60, Vector3.up);
+            Quaternion turnAngleHorizontal = Quaternion.AngleAxis(Input.GetAxis("Mouse X") * rotateVel, Vector3.up);
             camOffset = turnAngleHorizontal * camOffset;
 
-            transform.LookAt(player.transform.position + Vector3.up * tiltUp);
+            transform.LookAt(playerRb.transform.position + Vector3.up * tiltUp);
 
-            newPos = player.transform.position + camOffset;
+            newPos = playerRb.transform.position + camOffset;
 
-
-            transform.position = Vector3.Slerp(transform.position, newPos, lag);
+            transform.position = newPos;
+            //transform.position = Vector3.Slerp(transform.position, newPos, lag);
 
 
 

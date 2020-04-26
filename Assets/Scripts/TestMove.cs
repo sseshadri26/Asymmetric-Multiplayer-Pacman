@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
 
 public class TestMove : MonoBehaviour
 {
@@ -15,12 +16,12 @@ public class TestMove : MonoBehaviour
     {
         if (Input.GetKey(KeyCode.A))
         {
-            transform.position += Vector3.left;
+            transform.position += Vector3.left*Time.deltaTime*30;
 
         }
         if (Input.GetKey(KeyCode.D))
         {
-            transform.position += Vector3.right;
+            transform.position += Vector3.right * Time.deltaTime * 30;
 
         }
     }
