@@ -9,6 +9,9 @@ EditorBuildSettings:
     path: Assets/Scenes/Menu.unity
     guid: 13cfd65146405f64cbc0c6c317edcef0
   - enabled: 1
-    path: Assets/Scenes/MazeScene.unity
-    guid: 9fc0d4010bbf28b4594072e72b8655ab
+    path: Assets/Scenes/WaitingRoom.unity
+    guid: 6c526e4f0d771410888a109ff15d17aa
+  - enabled: 1
+    path: Assets/Scenes/MultiplayerTestScene.unity
+    guid: b5beb2add0e5240a7ab97ee875847556
   m_configObjects: {}

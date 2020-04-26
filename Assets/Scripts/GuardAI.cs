@@ -6,15 +6,8 @@ using UnityEngine.UI;
 public class GuardAI : MonoBehaviour
 {
 
-    //Variables
-    //public float speed = 20;
-    //public float rotateSpeed = 10;
 
-    //public float directionDistance = 5;
-    //public float targetDistance = 5;
-    //public float followSpeed = 11;
     public Text text;
-    public GameObject player;
 
     public float sightDistance;
     public float frontSightDistance;
