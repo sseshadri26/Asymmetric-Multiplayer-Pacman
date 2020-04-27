@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Photon.Pun;
 using UnityEngine;
 
 public class MoveCharacter : MonoBehaviour
@@ -18,6 +19,8 @@ public class MoveCharacter : MonoBehaviour
 
     float forwardInput, sideInput;
 
+    private PhotonView PV;
+
     public Quaternion TargetRotation
     {
         get { return targetRotation; }
@@ -28,6 +31,14 @@ public class MoveCharacter : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        PV = GetComponent<PhotonView>();
+
+        if (cam==null)
+        {
+            cam = (GameObject.Find("Main Camera").GetComponent<Camera>());
+        }
+        
+
         targetRotation = transform.rotation;
         rb = GetComponent<Rigidbody>();
 
@@ -39,13 +50,18 @@ public class MoveCharacter : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        GetInput();
+        if(PV.IsMine)
+        {
+            GetInput();
 
 
-        Run();
+            Run();
 
 
-        Turn();
+            Turn();
+        }
+
+        
 
 
 
@@ -89,12 +105,14 @@ public class MoveCharacter : MonoBehaviour
 
     void Run()
     {
-        if (camScript.topDown)
+        
+        if (camScript==null || camScript.topDown)
         {
-            Vector3 desiredVel = Vector3.forward * forwardInput * forwardVel + Vector3.right * sideInput * forwardVel;
+            Vector3 desiredVel = (Vector3.forward * forwardInput * forwardVel + Vector3.right * sideInput * forwardVel);
             //implement acceleration later
             //rb.velocity = Vector3.Slerp(rb.velocity, desiredVel, acceleration);
             rb.velocity = desiredVel;
+            
 
 
 
@@ -105,7 +123,7 @@ public class MoveCharacter : MonoBehaviour
         }
         else
         {
-            Vector3 desiredVel = transform.forward * forwardInput * forwardVel + transform.right * sideInput * forwardVel;
+            Vector3 desiredVel = (transform.forward * forwardInput * forwardVel + transform.right * sideInput * forwardVel);
             rb.velocity = Vector3.Slerp(rb.velocity, desiredVel, acceleration);
         }
 
@@ -121,19 +139,19 @@ public class MoveCharacter : MonoBehaviour
         //transform.rotation = targetRotation;
         ////targetRotation *= Quaternion.AngleAxis(rotateVel * turnInput * Time.deltaTime, Vector3.up);
         ////transform.rotation = targetRotation;
-        if (!camScript.topDown)
-        {
-            Vector3 cameraAtPlayerLevelPos = new Vector3(cam.transform.position.x, transform.position.y, cam.transform.position.z);
-
-            transform.LookAt(2 * transform.position - cameraAtPlayerLevelPos);
-        }
-        else
+        if (camScript==null || camScript.topDown)
         {
             Vector3 turnDir = new Vector3(sideInput, 0f, forwardInput);
             if (turnDir != Vector3.zero)
             {
                 transform.rotation = Quaternion.LookRotation(turnDir);
             }
+        }
+        else
+        {
+            Vector3 cameraAtPlayerLevelPos = new Vector3(cam.transform.position.x, transform.position.y, cam.transform.position.z);
+
+            transform.LookAt(2 * transform.position - cameraAtPlayerLevelPos);
         }
 
     }

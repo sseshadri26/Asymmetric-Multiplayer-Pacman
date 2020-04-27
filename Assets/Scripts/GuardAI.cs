@@ -2,19 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using Photon.Pun;
 
 public class GuardAI : MonoBehaviour
 {
 
-    //Variables
-    //public float speed = 20;
-    //public float rotateSpeed = 10;
 
-    //public float directionDistance = 5;
-    //public float targetDistance = 5;
-    //public float followSpeed = 11;
     public Text text;
-    public GameObject player;
 
     public float sightDistance;
     public float frontSightDistance;
@@ -27,17 +21,19 @@ public class GuardAI : MonoBehaviour
     public float forwardVel;
     Rigidbody rb;
     public bool playerControl = false;
+    bool bump = false;
 
     float enemyLength = 0.3f;
 
     //three floats to represent distances to objects left, right, and front
     float l, r, f;
 
-
+    private PhotonView PV;
 
     // Start is called before the first frame update
     void Start()
     {
+        PV = GetComponent<PhotonView>();
         rb = GetComponent<Rigidbody>();
         l = r = f = 0;
     }
@@ -45,25 +41,28 @@ public class GuardAI : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        LookForWalls();
-        MovementLogic(f, l, r);
-        switchControl();
-        if (playerControl)
+        if (PV.IsMine)
         {
-            GetInput();
+            LookForWalls();
+            MovementLogic(f, l, r);
+            switchControl();
+            if (playerControl)
+            {
+                GetInput();
 
 
-            Run();
+                Run();
 
 
-            Turn();
-        }
+                Turn();
+            }
 
-        else
-        {
+            else
+            {
 
 
-            RunAI();
+                RunAI();
+            }
         }
 
 
@@ -79,7 +78,7 @@ public class GuardAI : MonoBehaviour
 
     void RunAI()
     {
-        Vector3 desiredVel = transform.forward * forwardInput * forwardVel + transform.right * sideInput * forwardVel;
+        Vector3 desiredVel = (transform.forward * forwardInput * forwardVel + transform.right * sideInput * forwardVel) ;
         rb.velocity = desiredVel;
 
         Vector3 turnDir = new Vector3(sideInput, 0f, forwardInput);
@@ -94,7 +93,7 @@ public class GuardAI : MonoBehaviour
 
     void Run()
     {
-        Vector3 desiredVel = Vector3.forward * forwardInput * forwardVel + Vector3.right * sideInput * forwardVel;
+        Vector3 desiredVel = (Vector3.forward * forwardInput * forwardVel + Vector3.right * sideInput * forwardVel) ;
         //rb.velocity = Vector3.Slerp(rb.velocity, desiredVel, acceleration);
         rb.velocity = desiredVel;
 
@@ -173,8 +172,12 @@ public class GuardAI : MonoBehaviour
 
 
         //if in a corridor with two walls left and right, no wall in front
-
-        if (l > 0 && r > 0 && f == 0)
+        if (bump == true)
+        {
+            forwardInput = -1;
+            bump = false;
+        }
+        else if (l > 0 && r > 0 && f == 0)
         {
             gameObject.GetComponent<Renderer>().material.color = Color.green;
 
@@ -367,4 +370,15 @@ public class GuardAI : MonoBehaviour
             transform.rotation = Quaternion.LookRotation(turnDir);
         }
     }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (playerControl == false && collision.gameObject.tag == "guard")
+        {
+            bump = true;
+            Debug.Log("Bump");
+        }
+    }
+
+
 }
