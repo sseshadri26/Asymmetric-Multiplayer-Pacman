@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using Photon.Pun;
 
 public class GuardAI : MonoBehaviour
 {
@@ -27,11 +28,12 @@ public class GuardAI : MonoBehaviour
     //three floats to represent distances to objects left, right, and front
     float l, r, f;
 
-
+    private PhotonView PV;
 
     // Start is called before the first frame update
     void Start()
     {
+        PV = GetComponent<PhotonView>();
         rb = GetComponent<Rigidbody>();
         l = r = f = 0;
     }
@@ -39,25 +41,28 @@ public class GuardAI : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        LookForWalls();
-        MovementLogic(f, l, r);
-        switchControl();
-        if (playerControl)
+        if (PV.IsMine)
         {
-            GetInput();
+            LookForWalls();
+            MovementLogic(f, l, r);
+            switchControl();
+            if (playerControl)
+            {
+                GetInput();
 
 
-            Run();
+                Run();
 
 
-            Turn();
-        }
+                Turn();
+            }
 
-        else
-        {
+            else
+            {
 
 
-            RunAI();
+                RunAI();
+            }
         }
 
 
@@ -73,7 +78,7 @@ public class GuardAI : MonoBehaviour
 
     void RunAI()
     {
-        Vector3 desiredVel = (transform.forward * forwardInput * forwardVel + transform.right * sideInput * forwardVel) * Time.deltaTime * 60;
+        Vector3 desiredVel = (transform.forward * forwardInput * forwardVel + transform.right * sideInput * forwardVel) ;
         rb.velocity = desiredVel;
 
         Vector3 turnDir = new Vector3(sideInput, 0f, forwardInput);
@@ -88,7 +93,7 @@ public class GuardAI : MonoBehaviour
 
     void Run()
     {
-        Vector3 desiredVel = (Vector3.forward * forwardInput * forwardVel + Vector3.right * sideInput * forwardVel) *Time.deltaTime * 60;
+        Vector3 desiredVel = (Vector3.forward * forwardInput * forwardVel + Vector3.right * sideInput * forwardVel) ;
         //rb.velocity = Vector3.Slerp(rb.velocity, desiredVel, acceleration);
         rb.velocity = desiredVel;
 
