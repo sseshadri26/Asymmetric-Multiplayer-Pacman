@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
 
 public class CameraFollowPlayer : MonoBehaviour
 {
@@ -26,6 +27,10 @@ public class CameraFollowPlayer : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        if (player==null)
+        {
+            player = GameObject.Find("player");
+        }
 
         playerRb = player.GetComponent<Rigidbody>();
         mycam = GetComponent<Camera>();
@@ -47,36 +52,39 @@ public class CameraFollowPlayer : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        Vector3 newPos;
-
-        if (topDown)
+        if (PhotonNetwork.IsMasterClient)
         {
+            Vector3 newPos;
 
-            newPos = new Vector3(0, 21, 0);
-            transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.Euler(90, 0, 0), lag / 2);
-            transform.position = Vector3.Slerp(transform.position, newPos, lag / 3);
+            if (topDown)
+            {
 
-
-        }
-        else
-        {
-            //transform.LookAt(mycam.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, mycam.nearClipPlane)), Vector3.up);
+                newPos = new Vector3(0, 21, 0);
+                transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.Euler(90, 0, 0), lag / 2);
+                transform.position = Vector3.Slerp(transform.position, newPos, lag / 3);
 
 
-
-
-            Quaternion turnAngleHorizontal = Quaternion.AngleAxis(Input.GetAxis("Mouse X") * rotateVel, Vector3.up);
-            camOffset = turnAngleHorizontal * camOffset;
-
-            transform.LookAt(playerRb.transform.position + Vector3.up * tiltUp);
-
-            newPos = playerRb.transform.position + camOffset;
-
-            transform.position = newPos;
-            //transform.position = Vector3.Slerp(transform.position, newPos, lag);
+            }
+            else
+            {
+                //transform.LookAt(mycam.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, mycam.nearClipPlane)), Vector3.up);
 
 
 
+
+                Quaternion turnAngleHorizontal = Quaternion.AngleAxis(Input.GetAxis("Mouse X") * rotateVel, Vector3.up);
+                camOffset = turnAngleHorizontal * camOffset;
+
+                transform.LookAt(playerRb.transform.position + Vector3.up * tiltUp);
+
+                newPos = playerRb.transform.position + camOffset;
+
+                transform.position = newPos;
+                //transform.position = Vector3.Slerp(transform.position, newPos, lag);
+
+
+
+            }
         }
 
 
