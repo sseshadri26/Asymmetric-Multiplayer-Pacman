@@ -253,7 +253,7 @@ MonoBehaviour:
   playerSpotDistance: 1.8
   acceleration: 0.15
   forwardVel: 5.89
-  playerControl: 0
+  playerControl: 1
 --- !u!54 &157148113
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -556,7 +556,7 @@ MonoBehaviour:
   playerSpotDistance: 1.8
   acceleration: 0.15
   forwardVel: 5.89
-  playerControl: 0
+  playerControl: 1
 --- !u!54 &540623975
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1074,7 +1074,7 @@ MonoBehaviour:
   playerSpotDistance: 1.8
   acceleration: 0.15
   forwardVel: 5.89
-  playerControl: 0
+  playerControl: 1
 --- !u!54 &1026989682
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -2074,7 +2074,7 @@ MonoBehaviour:
   playerSpotDistance: 1.8
   acceleration: 0.15
   forwardVel: 5.89
-  playerControl: 0
+  playerControl: 1
 --- !u!54 &2105275577
 Rigidbody:
   m_ObjectHideFlags: 0
