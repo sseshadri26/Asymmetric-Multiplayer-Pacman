@@ -2061,6 +2061,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: -2338129145554744569, guid: 84b04777116b9441b8ba8931dd23155b,
+        type: 3}
+      propertyPath: viewIdField
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 1106444740093857202, guid: 84b04777116b9441b8ba8931dd23155b,
         type: 3}
       propertyPath: m_LocalPosition.x
