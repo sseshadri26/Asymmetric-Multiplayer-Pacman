@@ -693,7 +693,7 @@ Light:
   serializedVersion: 10
   m_Type: 0
   m_Shape: 0
-  m_Color: {r: 1, g: 0, b: 0.079866886, a: 1}
+  m_Color: {r: 1, g: 0, b: 0.63768053, a: 1}
   m_Intensity: 1000
   m_Range: 1.5
   m_SpotAngle: 90.681625
@@ -956,7 +956,7 @@ Light:
   serializedVersion: 10
   m_Type: 0
   m_Shape: 0
-  m_Color: {r: 1, g: 0, b: 0.079866886, a: 1}
+  m_Color: {r: 1, g: 0, b: 0.63768053, a: 1}
   m_Intensity: 1000
   m_Range: 1.5
   m_SpotAngle: 90.681625
@@ -1896,7 +1896,7 @@ Light:
   serializedVersion: 10
   m_Type: 0
   m_Shape: 0
-  m_Color: {r: 1, g: 0, b: 0.079866886, a: 1}
+  m_Color: {r: 1, g: 0, b: 0.63768053, a: 1}
   m_Intensity: 1000
   m_Range: 1.5
   m_SpotAngle: 90.681625
@@ -1994,7 +1994,7 @@ Light:
   serializedVersion: 10
   m_Type: 0
   m_Shape: 0
-  m_Color: {r: 1, g: 0, b: 0.079866886, a: 1}
+  m_Color: {r: 1, g: 0, b: 0.63768053, a: 1}
   m_Intensity: 1000
   m_Range: 1.5
   m_SpotAngle: 90.681625
@@ -2617,6 +2617,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 392614420223361782, guid: c666dc69d47e5da4a908ea9fdffa5646,
+        type: 3}
+      propertyPath: m_Color.b
+      value: 0.63768053
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c666dc69d47e5da4a908ea9fdffa5646, type: 3}
