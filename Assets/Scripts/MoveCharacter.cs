@@ -50,7 +50,8 @@ public class MoveCharacter : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(PV.IsMine)
+        if(PV == null || PV.IsMine
+            )
         {
             GetInput();
 
