@@ -7,8 +7,8 @@ public class GameSetup : MonoBehaviour
 {
     public static GameSetup gs;
 
-    public Transform[] spawnPoints;
-
+    public Transform PlayerSpawnPoint;
+    public Transform[] guardSpawnPoints;
 
     void Start()
     {

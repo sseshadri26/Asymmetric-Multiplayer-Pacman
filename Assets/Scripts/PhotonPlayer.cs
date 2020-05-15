@@ -8,16 +8,25 @@ public class PhotonPlayer : MonoBehaviour
     private PhotonView PV;
 
     public GameObject myAvatar;
+
+    public GameObject[] guards;
+
     // Start is called before the first frame update
     void Start()
     {
         PV = GetComponent<PhotonView>();
+        guards = new GameObject[GameSetup.gs.guardSpawnPoints.Length];
+
+        //Master Client is assigned the player avatars
+        //other person is assigned the guards
+
+
 
         if (PhotonNetwork.IsMasterClient)
         {
             if (PV.IsMine)
             {
-                myAvatar = PhotonNetwork.Instantiate("player", GameSetup.gs.spawnPoints[0].position, GameSetup.gs.spawnPoints[0].rotation, 0);
+                myAvatar = PhotonNetwork.Instantiate("player", GameSetup.gs.PlayerSpawnPoint.position, GameSetup.gs.PlayerSpawnPoint.rotation, 0);
 
             }
         }
@@ -25,7 +34,12 @@ public class PhotonPlayer : MonoBehaviour
         {
             if (PV.IsMine)
             {
-                myAvatar = PhotonNetwork.Instantiate("guard", GameSetup.gs.spawnPoints[1].position, GameSetup.gs.spawnPoints[0].rotation, 0);
+                for(int i = 0; i < guards.Length; i++)
+                {
+                    guards[i] = PhotonNetwork.Instantiate("guard", GameSetup.gs.guardSpawnPoints[i].position, GameSetup.gs.guardSpawnPoints[i].rotation, 0);
+
+                }
+                
 
             }
         }

@@ -41,11 +41,12 @@ public class GuardAI : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        LookForWalls();
+        MovementLogic(f, l, r);
+
         if (PV == null || PV.IsMine)
         {
-            LookForWalls();
-            MovementLogic(f, l, r);
-            switchControl();
+
             if (playerControl)
             {
                 GetInput();
@@ -68,13 +69,6 @@ public class GuardAI : MonoBehaviour
 
     }
 
-    void switchControl()
-    {
-        if (Input.GetKeyDown(KeyCode.P))
-        {
-            playerControl = !playerControl;
-        }
-    }
 
     void RunAI()
     {
@@ -155,11 +149,7 @@ public class GuardAI : MonoBehaviour
 
         if (spottedPlayer)
         {
-            text.text = "player spotted";
-        }
-        else
-        {
-            //text.text = "";
+            //what to do? end game?
         }
 
     }

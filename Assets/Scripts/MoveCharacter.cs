@@ -50,8 +50,7 @@ public class MoveCharacter : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(PV == null || PV.IsMine
-            )
+        if(PV == null || PV.IsMine)
         {
             GetInput();
 
@@ -109,7 +108,8 @@ public class MoveCharacter : MonoBehaviour
         
         if (camScript==null || camScript.topDown)
         {
-            Vector3 desiredVel = (Vector3.forward * forwardInput * forwardVel + Vector3.right * sideInput * forwardVel);
+            Vector3 desiredVel = (Vector3.forward * forwardInput * forwardVel + Vector3.right * sideInput * forwardVel) + new Vector3(0, rb.velocity.y, 0);
+            
             //implement acceleration later
             //rb.velocity = Vector3.Slerp(rb.velocity, desiredVel, acceleration);
             rb.velocity = desiredVel;
@@ -124,8 +124,9 @@ public class MoveCharacter : MonoBehaviour
         }
         else
         {
-            Vector3 desiredVel = (transform.forward * forwardInput * forwardVel + transform.right * sideInput * forwardVel);
-            rb.velocity = Vector3.Slerp(rb.velocity, desiredVel, acceleration);
+            Vector3 desiredVel = (transform.forward * forwardInput * forwardVel + transform.right * sideInput * forwardVel) + new Vector3(0, rb.velocity.y, 0);
+            rb.velocity = desiredVel;
+            //rb.velocity = Vector3.Slerp(rb.velocity, desiredVel, acceleration);
         }
 
 

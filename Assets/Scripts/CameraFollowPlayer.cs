@@ -27,12 +27,9 @@ public class CameraFollowPlayer : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        if (player==null)
-        {
-            player = GameObject.Find("player");
-        }
+        
 
-        playerRb = player.GetComponent<Rigidbody>();
+        
         mycam = GetComponent<Camera>();
         //Cursor.visible = false;
 
@@ -40,9 +37,16 @@ public class CameraFollowPlayer : MonoBehaviour
 
     private void Update()
     {
+
         if (Input.GetKeyDown(KeyCode.Space))
         {
             topDown = !topDown;
+
+            if (GameObject.FindGameObjectsWithTag("Player").Length > 0)
+            {
+                player = GameObject.FindGameObjectsWithTag("Player")[0];
+                playerRb = player.GetComponent<Rigidbody>();
+            }
         }
 
         //Debug.Log(Input.GetAxis("Mouse X"));
@@ -52,7 +56,7 @@ public class CameraFollowPlayer : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        if (PhotonNetwork.IsMasterClient)
+        if (PhotonNetwork.IsMasterClient || !PhotonNetwork.IsConnectedAndReady)
         {
             Vector3 newPos;
 
@@ -67,8 +71,6 @@ public class CameraFollowPlayer : MonoBehaviour
             }
             else
             {
-                //transform.LookAt(mycam.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, mycam.nearClipPlane)), Vector3.up);
-
 
 
 
@@ -79,8 +81,8 @@ public class CameraFollowPlayer : MonoBehaviour
 
                 newPos = playerRb.transform.position + camOffset;
 
-                transform.position = newPos;
-                //transform.position = Vector3.Slerp(transform.position, newPos, lag);
+                //transform.position = newPos;
+                transform.position = Vector3.Slerp(transform.position, newPos, lag);
 
 
 
