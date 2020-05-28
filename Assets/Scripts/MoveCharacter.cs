@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Photon.Pun;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class MoveCharacter : MonoBehaviour
 {
@@ -37,8 +38,11 @@ public class MoveCharacter : MonoBehaviour
         {
             cam = (GameObject.Find("Main Camera").GetComponent<Camera>());
         }
-        
 
+        if (PV == null || PV.IsMine)
+        {
+            GetComponent<MeshRenderer>().enabled = true;
+        }
         targetRotation = transform.rotation;
         rb = GetComponent<Rigidbody>();
 
@@ -59,6 +63,9 @@ public class MoveCharacter : MonoBehaviour
 
 
             Turn();
+
+            CheckEnd();
+            
         }
 
         
@@ -103,6 +110,13 @@ public class MoveCharacter : MonoBehaviour
         }
     }
 
+    void CheckEnd()
+    {
+
+        PhotonNetwork.Disconnect();
+        SceneManager.GetSceneByBuildIndex(0);
+        
+    }
     void Run()
     {
         
