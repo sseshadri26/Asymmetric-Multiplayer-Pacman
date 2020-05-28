@@ -8,7 +8,7 @@ public class LeavesPulse : MonoBehaviour
     public Material grass2;
     Renderer rend;
     int active = 1;
-    bool coll;
+    bool coll=false;
     // Start is called before the first frame update
     void Start()
     {
@@ -18,11 +18,21 @@ public class LeavesPulse : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //while (coll)
-        //{
+        if(coll)
+        {
             float time = 0;
             time += Time.deltaTime;
-            if (time > 1)
+            if (active == 1)
+            {
+                rend.material = grass2;
+                active = 2;
+            }
+            else if (active == 2)
+            {
+                rend.material = grass1;
+                active = 1;
+            }
+            if (time > 10)
             {
                 if (active == 1)
                 {
@@ -34,7 +44,7 @@ public class LeavesPulse : MonoBehaviour
                 }
                 time = 0;
             }
-        //}
+        }
     }
     private void OnCollisionEnter(Collision collision)
     {
