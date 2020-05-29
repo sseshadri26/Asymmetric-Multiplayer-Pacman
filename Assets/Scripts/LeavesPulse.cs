@@ -4,49 +4,41 @@ using UnityEngine;
 
 public class LeavesPulse : MonoBehaviour
 {
-    public Material grass1;
-    public Material grass2;
-    Renderer rend;
+
     int active = 1;
     bool coll=false;
+    ParticleSystem ps;
+    float timeToStop = 0;
     // Start is called before the first frame update
     void Start()
     {
-        rend = GetComponent<Renderer>();
+        ps = GetComponentInChildren<ParticleSystem>();
+        ps.Stop();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(coll)
+        if (coll)
         {
-            float time = 0;
-            time += Time.deltaTime;
-            if (active == 1)
+            timeToStop = 1.0f;
+        }
+
+        if (timeToStop > 0)
+        {
+            timeToStop -= Time.deltaTime;
+            if (ps.isPlaying == false)
             {
-                rend.material = grass2;
-                active = 2;
-            }
-            else if (active == 2)
-            {
-                rend.material = grass1;
-                active = 1;
-            }
-            if (time > 10)
-            {
-                if (active == 1)
-                {
-                    rend.material = grass2;
-                }
-                else if (active == 2)
-                {
-                    rend.material = grass1;
-                }
-                time = 0;
+                ps.Play();
             }
         }
+        else if (timeToStop <= 0 && ps.isPlaying == true)
+        {
+            ps.Stop();
+        }
     }
-    private void OnCollisionEnter(Collision collision)
+
+    private void OnTriggerEnter(Collider collision)
     {
         if (collision.gameObject.tag.Equals("Player"))
         {
@@ -54,11 +46,12 @@ public class LeavesPulse : MonoBehaviour
         }
 
     }
-    private void OnCollisionExit(Collision collision)
+    private void OnTriggerExit(Collider collision)
     {
         if (collision.gameObject.tag.Equals("Player"))
         {
             coll = false;
         }
     }
+   
 }

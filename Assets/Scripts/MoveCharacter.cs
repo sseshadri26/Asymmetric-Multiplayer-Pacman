@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Photon.Pun;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class MoveCharacter : MonoBehaviour
 {
@@ -12,6 +13,10 @@ public class MoveCharacter : MonoBehaviour
     public float acceleration;
 
     public Camera cam;
+
+    public bool gameOver=false;
+    bool GOprev = false;
+    public int objLeft = 13;
     CameraFollowPlayer camScript;
 
     Quaternion targetRotation;
@@ -21,6 +26,9 @@ public class MoveCharacter : MonoBehaviour
     float forwardInput, sideInput;
 
     private PhotonView PV;
+
+    float leaveGameCountdown=-1;
+    float buffer = 2f;
 
     public Quaternion TargetRotation
     {
@@ -54,8 +62,14 @@ public class MoveCharacter : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+       
         if(PV == null || PV.IsMine)
         {
+
+            if (GOprev == false)
+            {
+                checkEndPlayer();
+            }
             GetInput();
 
 
@@ -64,15 +78,89 @@ public class MoveCharacter : MonoBehaviour
 
             Turn();
 
-            CheckEnd();
-            
+            if (buffer>0)
+            {
+                buffer -= Time.deltaTime;
+            }
+
+            if (leaveGameCountdown > 0)
+            {
+                leaveGameCountdown -= Time.deltaTime;
+                if (leaveGameCountdown <= 0)
+                {
+                    PV.RPC("QuitGame", RpcTarget.All);
+                }
+            }
+
         }
+        if(!PV.IsMine)
+        {
+            if (GOprev == false)
+            {
+                checkEndGuard();
+            }
+        }
+
+
 
         
 
 
 
     }
+
+    [PunRPC]
+    void QuitGame()
+    {
+        PhotonNetwork.LeaveRoom();
+        SceneManager.LoadScene(0);
+
+    }
+
+    [PunRPC]
+    void EndGameGuardWins()
+    {
+        GameObject.Find("Canvas").GetComponentInChildren<Text>().text = "Guards Win!";
+        leaveGameCountdown = 5;
+        GOprev = true;
+
+        GetComponent<MeshRenderer>().enabled = true;
+
+    }
+
+    [PunRPC]
+    void EndGamePlayerWins()
+    {
+        GameObject.Find("Canvas").GetComponentInChildren<Text>().text = "Player Wins!";
+        leaveGameCountdown = 5;
+        GOprev = true;
+        GetComponent<MeshRenderer>().enabled = true;
+
+    }
+
+
+    void checkEndGuard()
+    {
+
+        if (gameOver == true)
+        {
+            Debug.Log("Guard Ends Game");
+            PV.RPC("EndGameGuardWins", RpcTarget.All);
+        }
+
+    }
+
+    void checkEndPlayer()
+    {
+        Debug.Log(objLeft);
+        if (objLeft==0)
+        {
+            Debug.Log("Player Ends Game");
+            PV.RPC("EndGamePlayerWins", RpcTarget.All);
+        }
+
+    }
+
 
     private void FixedUpdate()
     {
@@ -110,13 +198,7 @@ public class MoveCharacter : MonoBehaviour
         }
     }
 
-    void CheckEnd()
-    {
 
-        PhotonNetwork.Disconnect();
-        SceneManager.GetSceneByBuildIndex(0);
-        
-    }
     void Run()
     {
         
@@ -171,4 +253,23 @@ public class MoveCharacter : MonoBehaviour
         }
 
     }
+
+
+    private void OnTriggerEnter(Collider collision)
+    {
+        if (buffer <= 0)
+        {
+            if (collision.gameObject.tag.Equals("Objective"))
+            {
+                if(collision.gameObject.GetComponent<DissapearObj>().prev==false)
+                {
+                    objLeft -= 1;
+                    buffer = 0.2f;
+                }
+                
+            }
+        }
+
+    }
+
 }

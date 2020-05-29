@@ -36,6 +36,11 @@ MonoBehaviour:
   - DestroySpaceship
   - Fire
   - RespawnSpaceship
+  - checkEndGuard
+  - EndGame
+  - EndGameGuardWins
+  - EndGamePlayerWins
+  - QuitGame
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1

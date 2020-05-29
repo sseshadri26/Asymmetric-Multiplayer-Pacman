@@ -114,6 +114,8 @@ MonoBehaviour:
   rotateVel: 200
   acceleration: 1
   cam: {fileID: 0}
+  gameOver: 0
+  objLeft: 13
 --- !u!54 &2049668870777267064
 Rigidbody:
   m_ObjectHideFlags: 0

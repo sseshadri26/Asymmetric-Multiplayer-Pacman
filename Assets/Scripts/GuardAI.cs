@@ -29,6 +29,7 @@ public class GuardAI : MonoBehaviour
     float l, r, f;
 
     private PhotonView PV;
+    GameObject player;
 
     // Start is called before the first frame update
     void Start()
@@ -113,9 +114,10 @@ public class GuardAI : MonoBehaviour
         //what's directly in front? (for seeing the player)
         if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), out frontHit, playerSpotDistance))
         {
-            if (frontHit.collider.gameObject.name == "player")
+            if (frontHit.collider.gameObject.tag == "Player")
             {
                 spottedPlayer = true;
+                player = frontHit.collider.gameObject;
             }
 
         }
@@ -150,6 +152,8 @@ public class GuardAI : MonoBehaviour
         if (spottedPlayer)
         {
             //what to do? end game?
+            Debug.Log("Game should be over now...spotted is true");
+            player.GetComponent<MoveCharacter>().gameOver = true;
         }
 
     }

@@ -134,7 +134,7 @@ MonoBehaviour:
   frontSightDistance: 0.5
   playerSpotDistance: 1.8
   acceleration: 0.15
-  forwardVel: 2
+  forwardVel: 3
   playerControl: 0
 --- !u!114 &-2338129145554744569
 MonoBehaviour:
