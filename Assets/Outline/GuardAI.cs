@@ -358,11 +358,11 @@ public class GuardAI : MonoBehaviour
     {
         //forwardInput = Input.GetAxis("Vertical");
         //turnInput = Input.GetAxis("Horzontal");
-        if (Input.GetKey(KeyCode.W))
+        if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow))
         {
             forwardInput = 1;
         }
-        else if (Input.GetKey(KeyCode.S))
+        else if (Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow))
         {
             forwardInput = -1;
         }
@@ -371,11 +371,11 @@ public class GuardAI : MonoBehaviour
             forwardInput = 0;
         }
 
-        if (Input.GetKey(KeyCode.A))
+        if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow))
         {
             sideInput = -1;
         }
-        else if (Input.GetKey(KeyCode.D))
+        else if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow))
         {
             sideInput = 1;
         }

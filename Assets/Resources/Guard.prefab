@@ -130,7 +130,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   text: {fileID: 0}
-  sightDistance: 1
+  sightDistance: 0.75
   frontSightDistance: 0.5
   playerSpotDistance: 1.8
   acceleration: 0.15
