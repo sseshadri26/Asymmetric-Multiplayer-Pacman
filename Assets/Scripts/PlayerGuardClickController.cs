@@ -7,9 +7,9 @@ public class PlayerGuardClickController : MonoBehaviour
 {
     public GameObject currentGuard;
     GuardAI guardAIScript;
-    public GameObject[] guards;
+    public GameObject[] guards = new GameObject[5];
     private PhotonView PV;
-    int currentGuardNum = 1;
+    int currentGuardNum = 0;
 
     // Start is called before the first frame update
     void Start()
@@ -69,10 +69,11 @@ public class PlayerGuardClickController : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
+            Debug.Log(currentGuardNum);
             currentGuardNum++;
-            if(currentGuardNum==6)
+            if(currentGuardNum==5)
             {
-                currentGuardNum = 1;
+                currentGuardNum = 0;
             }
             
 
