@@ -144,7 +144,7 @@ public class MoveCharacter : MonoBehaviour
 
         if (gameOver == true)
         {
-            Debug.Log("Guard Ends Game");
+            Debug.Log("checkEndGuard is true");
             PV.RPC("EndGameGuardWins", RpcTarget.All);
         }
 
@@ -152,10 +152,9 @@ public class MoveCharacter : MonoBehaviour
 
     void checkEndPlayer()
     {
-        Debug.Log(objLeft);
         if (objLeft==0)
         {
-            Debug.Log("Player Ends Game");
+            Debug.Log("checkEndPlayer is true");
             PV.RPC("EndGamePlayerWins", RpcTarget.All);
         }
 

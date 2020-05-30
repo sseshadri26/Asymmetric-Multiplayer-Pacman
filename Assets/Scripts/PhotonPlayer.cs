@@ -37,7 +37,7 @@ public class PhotonPlayer : MonoBehaviour
                 for(int i = 0; i < guards.Length; i++)
                 {
                     guards[i] = PhotonNetwork.Instantiate("guard", GameSetup.gs.guardSpawnPoints[i].position, GameSetup.gs.guardSpawnPoints[i].rotation, 0);
-
+                    GameObject.Find("PlayerGuardClickController").GetComponent<PlayerGuardClickController>().guards[i] = guards[i];
                 }
                 
 

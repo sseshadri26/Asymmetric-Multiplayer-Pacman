@@ -6,6 +6,7 @@ using Photon.Pun;
 
 public class GuardAI : MonoBehaviour
 {
+    Renderer renderer;
 
 
     public Text text;
@@ -23,6 +24,9 @@ public class GuardAI : MonoBehaviour
     public bool playerControl = false;
     bool bump = false;
 
+    public Material m1;
+    public Material m2;
+
     float enemyLength = 0.3f;
 
     //three floats to represent distances to objects left, right, and front
@@ -37,6 +41,8 @@ public class GuardAI : MonoBehaviour
         PV = GetComponent<PhotonView>();
         rb = GetComponent<Rigidbody>();
         l = r = f = 0;
+
+        renderer = GetComponent<Renderer>();
     }
 
     // Update is called once per frame
@@ -93,6 +99,18 @@ public class GuardAI : MonoBehaviour
         rb.velocity = desiredVel;
 
 
+    }
+
+    public void changeColor(bool playerControl)
+    {
+        if (playerControl)
+        {
+            renderer.material = m1;
+        }
+        else
+        {
+            renderer.material = m2;
+        }
     }
 
     void LookForWalls()

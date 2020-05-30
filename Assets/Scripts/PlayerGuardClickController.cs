@@ -7,8 +7,9 @@ public class PlayerGuardClickController : MonoBehaviour
 {
     public GameObject currentGuard;
     GuardAI guardAIScript;
-
+    public GameObject[] guards;
     private PhotonView PV;
+    int currentGuardNum = 1;
 
     // Start is called before the first frame update
     void Start()
@@ -23,6 +24,7 @@ public class PlayerGuardClickController : MonoBehaviour
         if (PV == null || PV.IsMine)
         {
             findClick();
+            spaceChange();
         }
     }
 
@@ -42,21 +44,49 @@ public class PlayerGuardClickController : MonoBehaviour
                     if (guardAIScript != null)
                     {
                         guardAIScript.playerControl = false;
+                        guardAIScript.changeColor(false);
                     }
                     currentGuard = hit.transform.gameObject;
                     guardAIScript = currentGuard.GetComponent<GuardAI>();
                     guardAIScript.playerControl = true;
+                    guardAIScript.changeColor(true);
                 }
                 else
                 {
                     if (guardAIScript != null)
                     {
                         guardAIScript.playerControl = false;
+                        guardAIScript.changeColor(false);
                     }
                     currentGuard = null;
                     guardAIScript = null;
                 }
             }
+        }
+    }
+
+    void spaceChange()
+    {
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            currentGuardNum++;
+            if(currentGuardNum==6)
+            {
+                currentGuardNum = 1;
+            }
+            
+
+
+            if (guardAIScript != null)
+            {
+                guardAIScript.playerControl = false;
+                guardAIScript.changeColor(false);
+            }
+            currentGuard = guards[currentGuardNum];
+            guardAIScript = currentGuard.GetComponent<GuardAI>();
+            guardAIScript.playerControl = true;
+            guardAIScript.changeColor(true);
+
         }
     }
 }

@@ -136,6 +136,8 @@ MonoBehaviour:
   acceleration: 0.15
   forwardVel: 3
   playerControl: 0
+  m1: {fileID: 2100000, guid: 0f4150507b07246e3919341b82222db4, type: 2}
+  m2: {fileID: 2100000, guid: fc0869d0a5d974385b7f9e0352d00f1f, type: 2}
 --- !u!114 &-2338129145554744569
 MonoBehaviour:
   m_ObjectHideFlags: 0
