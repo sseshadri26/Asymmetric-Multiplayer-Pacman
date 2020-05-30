@@ -72,8 +72,11 @@ public class GuardAI : MonoBehaviour
                 RunAI();
             }
         }
+        if (!PV.IsMine)
+        {
+            SpotPlayer();
 
-
+        }
     }
 
 
@@ -113,9 +116,34 @@ public class GuardAI : MonoBehaviour
         }
     }
 
-    void LookForWalls()
+
+    void SpotPlayer()
     {
         bool spottedPlayer = false;
+
+        //what's directly in front? (for seeing the player)
+        if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), out frontHit, playerSpotDistance))
+        {
+            if (frontHit.collider.gameObject.tag == "Player")
+            {
+                spottedPlayer = true;
+                player = frontHit.collider.gameObject;
+            }
+            if (spottedPlayer)
+            {
+                //what to do? end game?
+                Debug.Log("Game should be over now...spotted is true");
+                player.GetComponent<MoveCharacter>().gameOver = true;
+            }
+        }
+
+
+    }
+
+
+    void LookForWalls()
+    {
+        
 
         l = r = f = 0;
         float r1, r2, l1, l2; //checking front side and back sie of the enamy, to avoid getting stuck.
@@ -129,16 +157,7 @@ public class GuardAI : MonoBehaviour
 
         }
 
-        //what's directly in front? (for seeing the player)
-        if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), out frontHit, playerSpotDistance))
-        {
-            if (frontHit.collider.gameObject.tag == "Player")
-            {
-                spottedPlayer = true;
-                player = frontHit.collider.gameObject;
-            }
 
-        }
 
 
         //what's directly to the left?
@@ -167,12 +186,7 @@ public class GuardAI : MonoBehaviour
         r = Mathf.Max(r1, r2);
         l = Mathf.Max(l1, l2);
 
-        if (spottedPlayer)
-        {
-            //what to do? end game?
-            Debug.Log("Game should be over now...spotted is true");
-            player.GetComponent<MoveCharacter>().gameOver = true;
-        }
+
 
     }
 
