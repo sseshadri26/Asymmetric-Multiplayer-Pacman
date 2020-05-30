@@ -91,15 +91,13 @@ public class MoveCharacter : MonoBehaviour
                     PV.RPC("QuitGame", RpcTarget.All);
                 }
             }
-
-        }
-        if(!PV.IsMine)
-        {
             if (GOprev == false)
             {
                 checkEndGuard();
             }
+
         }
+
 
 
 
