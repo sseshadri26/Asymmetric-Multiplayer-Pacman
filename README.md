@@ -1,2 +1,2 @@
 # Unity-Multiplayer-Game
-A Unity multiplayer game.
+An asymetrical multiplayer stealth game called "Shadow Stalkers". Made in Unity.
