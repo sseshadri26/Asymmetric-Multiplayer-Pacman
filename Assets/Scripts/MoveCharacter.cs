@@ -129,7 +129,7 @@ public class MoveCharacter : MonoBehaviour
     [PunRPC]
     void EndGamePlayerWins()
     {
-        GameObject.Find("Canvas").GetComponentInChildren<Text>().text = "Player Wins!";
+        GameObject.Find("Canvas").GetComponentInChildren<Text>().text = "Ninja Wins!";
         leaveGameCountdown = 5;
         GOprev = true;
         GetComponent<MeshRenderer>().enabled = true;
