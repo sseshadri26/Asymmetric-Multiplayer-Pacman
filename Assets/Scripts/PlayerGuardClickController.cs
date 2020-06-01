@@ -21,7 +21,7 @@ public class PlayerGuardClickController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (PV == null || PV.IsMine)
+        if (!PhotonNetwork.IsMasterClient)
         {
             findClick();
             spaceChange();

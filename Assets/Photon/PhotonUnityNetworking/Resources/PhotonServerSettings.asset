@@ -41,6 +41,8 @@ MonoBehaviour:
   - EndGameGuardWins
   - EndGamePlayerWins
   - QuitGame
+  - changeColor
+  - changeColorRPC
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1

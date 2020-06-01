@@ -104,7 +104,14 @@ public class GuardAI : MonoBehaviour
 
     }
 
+    
     public void changeColor(bool playerControl)
+    {
+        PV.RPC("changeColorRPC", RpcTarget.All, playerControl);
+    }
+
+    [PunRPC]
+    void changeColorRPC(bool playerControl)
     {
         if (playerControl)
         {
@@ -115,6 +122,7 @@ public class GuardAI : MonoBehaviour
             renderer.material = m2;
         }
     }
+
 
 
     void SpotPlayer()
